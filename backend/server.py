@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, render_template
 from extensions import db, bcrypt, ma, cors
-from models import User, user_schema
+from models import User, user_schema, users_schema
 
 app = Flask(__name__)
 
@@ -70,6 +70,54 @@ def check_session():
         return user_schema.jsonify(user), 200
     return jsonify({'message': 'Not logged in'}), 401
 
+# ================ COMMAND CENTER ================ #
+
+@app.route('/command-center')
+def command_center():
+    return render_template('command_center.html')
+
+# HEALTH CHECK #
+@app.route('/command/health', methods=['GET'])
+def health_check():
+    return jsonify({
+        'status': 'healthy',
+        'database': 'connected',
+        'users_count': User.query.count()
+    }), 200
+
+# WHO'S LOGGED IN #
+@app.route('/command/sessions', methods=['GET'])
+def check_sessions():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.get(user_id)
+        return jsonify({
+            'logged_in': True,
+            'user': user_schema.dump(user)
+        }), 200
+    return jsonify({'logged_in': False}), 200
+
+# SHOW ALL USERS #
+@app.route('/command/users', methods=['GET'])
+def get_all_users():
+    users = User.query.all()
+    return jsonify({
+        'count': len(users),
+        'users': users_schema.dump(users)
+    }), 200
+
+# NUKE DB #
+@app.route('/command/nuke', methods=['POST'])
+def nuke_database():
+    db.drop_all()
+    return jsonify({'message': 'Database nuked!'}), 200
+
+# RESET DB #
+@app.route('/command/reset', methods=['POST'])
+def reset_database():
+    db.drop_all()
+    db.create_all()
+    return jsonify({'message': 'Database reset!'}), 200
 
 with app.app_context():
     db.create_all()

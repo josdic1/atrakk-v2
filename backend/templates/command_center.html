@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='command.css') }}">
+</head>
+<body>
+    <div class="command-box">
+        <div class="title">COMMAND CENTER</div>
+        
+        <div class="output-screen" id="output">
+            > System Ready...
+        </div>
+        
+        <div class="button-grid">
+            <button class="command-btn" onclick="healthCheck()">HEALTH CHECK</button>
+            <button class="command-btn" onclick="checkSessions()">WHO'S LOGGED IN</button>
+            <button class="command-btn" onclick="showUsers()">SHOW ALL USERS</button>
+            <button class="command-btn danger" onclick="nukeDB()">NUKE DB</button>
+            <button class="command-btn danger" onclick="resetDB()">RESET DB</button>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='command.js') }}"></script>
+</body>
+</html>

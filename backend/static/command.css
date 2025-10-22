@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+}
+
+.command-box {
+    background: linear-gradient(145deg, #2c2416, #3d3020);
+    border: 8px solid #4a3f2a;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 
+        0 20px 60px rgba(0,0,0,0.8),
+        inset 0 2px 4px rgba(255,255,255,0.1);
+    max-width: 700px;
+    width: 90%;
+}
+
+.title {
+    text-align: center;
+    color: #ff6b35;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px #ff6b35;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.output-screen {
+    background: #0a0a0a;
+    border: 4px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 200px;
+    color: #00ff41;
+    font-size: 16px;
+    font-family: 'Courier New', monospace;
+    overflow-y: auto;
+    margin-bottom: 30px;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
+    white-space: pre-wrap;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.command-btn {
+    background: linear-gradient(145deg, #4a4a4a, #2a2a2a);
+    border: 4px solid #1a1a1a;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    box-shadow: 
+        0 6px 0 #0d0d0d,
+        0 8px 15px rgba(0,0,0,0.5);
+}
+
+.command-btn:hover {
+    background: linear-gradient(145deg, #5a5a5a, #3a3a3a);
+    box-shadow: 
+        0 4px 0 #0d0d0d,
+        0 6px 12px rgba(0,0,0,0.5);
+    transform: translateY(2px);
+}
+
+.command-btn:active {
+    box-shadow: 
+        0 2px 0 #0d0d0d,
+        0 3px 8px rgba(0,0,0,0.5);
+    transform: translateY(4px);
+}
+
+.command-btn.danger {
+    background: linear-gradient(145deg, #8b0000, #550000);
+    border-color: #330000;
+}
+
+.command-btn.danger:hover {
+    background: linear-gradient(145deg, #aa0000, #660000);
+}
