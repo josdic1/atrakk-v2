@@ -97,3 +97,20 @@ body {
 .command-btn.danger:hover {
     background: linear-gradient(145deg, #aa0000, #660000);
 }
+
+.login-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    flex: 1;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}

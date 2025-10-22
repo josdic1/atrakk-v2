@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, session, render_template
 from extensions import db, bcrypt, ma, cors
-from models import User, user_schema, users_schema
+from models import User, user_schema, users_schema, Status, status_schema, statuses_schema, Artist, artist_schema, artists_schema, Track, track_schema, tracks_schema
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 bcrypt.init_app(app)
 ma.init_app(app)
-cors.init_app(app)
+cors.init_app(app, supports_credentials=True, origins=['http://localhost:5555'])
 
 # ================ USER ================ #
 
@@ -38,7 +38,6 @@ def register():
     session['user_id'] = new_user.id  # Log them in!
 
     return user_schema.jsonify(new_user), 201
-
 
 # LOGIN #
 @app.route('/login', methods=['POST'])
@@ -118,6 +117,43 @@ def reset_database():
     db.drop_all()
     db.create_all()
     return jsonify({'message': 'Database reset!'}), 200
+
+# SEED DATABASE #
+@app.route('/command/seed', methods=['POST'])
+def seed_database():
+    # Create statuses
+    demo = Status(name='Demo')
+    in_progress = Status(name='In Progress')
+    completed = Status(name='Completed')
+    released = Status(name='Released')
+    
+    db.session.add_all([demo, in_progress, completed, released])
+    
+    # Create sample artist
+    artist = Artist(name='Beautifuls Dream')
+    db.session.add(artist)
+    
+    db.session.commit()
+    
+    return jsonify({'message': 'Database seeded with statuses and artist!'}), 200
+
+# SHOW ALL DATA #
+@app.route('/command/data', methods=['GET'])
+def show_all_data():
+    users = User.query.all()
+    statuses = Status.query.all()
+    artists = Artist.query.all()
+    tracks = Track.query.all()
+    
+    return jsonify({
+        'users': users_schema.dump(users),
+        'statuses': statuses_schema.dump(statuses),
+        'artists': artists_schema.dump(artists),
+        'tracks': tracks_schema.dump(tracks)
+    }), 200
+
+
+# CONTEXT RUN #
 
 with app.app_context():
     db.create_all()

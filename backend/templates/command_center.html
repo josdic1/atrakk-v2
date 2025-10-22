@@ -9,18 +9,37 @@
 <body>
     <div class="command-box">
         <div class="title">COMMAND CENTER</div>
-        
-        <div class="output-screen" id="output">
+
+
+<!-- LOGIN SECTION -->
+<div class="login-section">
+    <input type="text" id="username" placeholder="Username" class="input-field">
+    <input type="password" id="password" placeholder="Password" class="input-field">
+    <button class="command-btn" onclick="login()">LOGIN</button>
+    <button class="command-btn" onclick="logout()">LOGOUT</button>
+</div>
+
+<!-- REGISTER SECTION -->
+<div class="login-section">
+    <input type="text" id="reg-username" placeholder="Username" class="input-field">
+    <input type="email" id="reg-email" placeholder="Email" class="input-field">
+    <input type="password" id="reg-password" placeholder="Password" class="input-field">
+    <button class="command-btn" onclick="register()">REGISTER</button>
+</div>
+
+<div class="output-screen" id="output">
             > System Ready...
         </div>
         
-        <div class="button-grid">
-            <button class="command-btn" onclick="healthCheck()">HEALTH CHECK</button>
-            <button class="command-btn" onclick="checkSessions()">WHO'S LOGGED IN</button>
-            <button class="command-btn" onclick="showUsers()">SHOW ALL USERS</button>
-            <button class="command-btn danger" onclick="nukeDB()">NUKE DB</button>
-            <button class="command-btn danger" onclick="resetDB()">RESET DB</button>
-        </div>
+  <div class="button-grid">
+    <button class="command-btn" onclick="healthCheck()">HEALTH CHECK</button>
+    <button class="command-btn" onclick="checkSessions()">WHO'S LOGGED IN</button>
+    <button class="command-btn" onclick="showUsers()">SHOW ALL USERS</button>
+    <button class="command-btn" onclick="showAllData()">SHOW ALL DATA</button>
+    <button class="command-btn" onclick="seedDB()">SEED DB</button>
+    <button class="command-btn danger" onclick="nukeDB()">NUKE DB</button>
+    <button class="command-btn danger" onclick="resetDB()">RESET DB</button>
+</div>
     </div>
     
     <script src="{{ url_for('static', filename='command.js') }}"></script>

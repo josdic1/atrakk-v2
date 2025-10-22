@@ -8,7 +8,9 @@ function addOutput(text) {
 async function healthCheck() {
     addOutput('Running health check...');
     try {
-        const response = await fetch('http://localhost:5555/command/health');
+        const response = await fetch('http://localhost:5555/command/health', {
+            credentials: 'include'
+        });
         const data = await response.json();
         addOutput(JSON.stringify(data, null, 2));
     } catch (error) {
@@ -32,7 +34,9 @@ async function checkSessions() {
 async function showUsers() {
     addOutput('Fetching all users...');
     try {
-        const response = await fetch('http://localhost:5555/command/users');
+        const response = await fetch('http://localhost:5555/command/users', {
+            credentials: 'include'
+        });
         const data = await response.json();
         addOutput(JSON.stringify(data, null, 2));
     } catch (error) {
@@ -45,7 +49,8 @@ async function nukeDB() {
     addOutput('NUKING DATABASE...');
     try {
         const response = await fetch('http://localhost:5555/command/nuke', {
-            method: 'POST'
+            method: 'POST',
+            credentials: 'include'
         });
         const data = await response.json();
         addOutput(JSON.stringify(data, null, 2));
@@ -59,7 +64,89 @@ async function resetDB() {
     addOutput('RESETTING DATABASE...');
     try {
         const response = await fetch('http://localhost:5555/command/reset', {
-            method: 'POST'
+            method: 'POST',
+            credentials: 'include'
+        });
+        const data = await response.json();
+        addOutput(JSON.stringify(data, null, 2));
+    } catch (error) {
+        addOutput('ERROR: ' + error.message);
+    }
+}
+
+async function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    addOutput('Logging in...');
+    try {
+        const response = await fetch('http://localhost:5555/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        addOutput(JSON.stringify(data, null, 2));
+    } catch (error) {
+        addOutput('ERROR: ' + error.message);
+    }
+}
+
+
+async function logout() {
+    addOutput('Logging out...');
+    try {
+        const response = await fetch('http://localhost:5555/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        const data = await response.json();
+        addOutput(JSON.stringify(data, null, 2));
+    } catch (error) {
+        addOutput('ERROR: ' + error.message);
+    }
+}
+
+async function seedDB() {
+    addOutput('Seeding database...');
+    try {
+        const response = await fetch('http://localhost:5555/command/seed', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        const data = await response.json();
+        addOutput(JSON.stringify(data, null, 2));
+    } catch (error) {
+        addOutput('ERROR: ' + error.message);
+    }
+}
+
+async function register() {
+    const username = document.getElementById('reg-username').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    
+    addOutput('Registering user...');
+    try {
+        const response = await fetch('http://localhost:5555/register', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        });
+        const data = await response.json();
+        addOutput(JSON.stringify(data, null, 2));
+    } catch (error) {
+        addOutput('ERROR: ' + error.message);
+    }
+}
+
+async function showAllData() {
+    addOutput('Fetching all database data...');
+    try {
+        const response = await fetch('http://localhost:5555/command/data', {
+            credentials: 'include'
         });
         const data = await response.json();
         addOutput(JSON.stringify(data, null, 2));
